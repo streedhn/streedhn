@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+  >
+
+  <title>STREEDHN - GORRAS</title>
+
+  <link rel="icon" href="../images/ENCABEZADO.PNG?v=4" type="image/png">
+  <link rel="shortcut icon" href="../images/ENCABEZADO.PNG?v=4" type="image/png">
+  <link rel="apple-touch-icon" href="../images/ENCABEZADO.PNG?v=4">
+  <link rel="icon" type="image/png" sizes="32x32" href="../images/ENCABEZADO.PNG?v=4">
+  <link rel="icon" type="image/png" sizes="16x16" href="../images/ENCABEZADO.PNG?v=4">
+
+
+<link rel="stylesheet" href="gorras.css">
+
+</head>
+
+
+<body>
+
+
+  <!-- ==================================================
+       PAGE LOADER
+  ================================================== -->
+
+  <div
+    class="page-loader"
+    id="pageLoader"
+    aria-hidden="true"
+  >
+
+    <div class="loader-logo">
+
+      <img
+        src="../images/LOGOTIPO.PNG"
+        alt=""
+      >
+
+    </div>
+
+  </div>
+
+
+  <!-- ==================================================
+       LOGO ESTÁTICO (PERMANECE ARRIBA AL HACER SCROLL)
+  ================================================== -->
+
+  <a
+    href="../"
+    class="logo-link"
+    aria-label="Ir al inicio"
+  >
+
+    <img
+      src="../images/LOGOTIPO.PNG"
+      alt="Logo STREEDHN"
+      class="logo"
+    >
+
+  </a>
+
+
+  <!-- ==================================================
+       CONTROLES
+  ================================================== -->
+
+  <div class="site-controls">
+
+    <button
+      class="control-button"
+      id="menuButton"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+    >
+
+      <span class="hamburger">
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+      </span>
+
+    </button>
+
+
+    <div class="controls-right">
+
+      <button
+        class="control-button"
+        id="searchButton"
+        aria-label="Abrir buscador"
+        aria-expanded="false"
+      >
+
+        <svg
+          class="search-icon"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+
+          <circle
+            cx="11"
+            cy="11"
+            r="8"
+          />
+
+          <line
+            x1="21"
+            y1="21"
+            x2="16.65"
+            y2="16.65"
+          />
+
+        </svg>
+
+      </button>
+
+
+      <button
+        class="control-button"
+        id="cartButton"
+        aria-label="Abrir carrito"
+        aria-expanded="false"
+      >
+
+        <svg
+          class="cart-icon"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+
+          <path
+            d="
+              M3 4 H5
+              L7.2 15.1
+              A2 2 0 0 0
+              9.2 16.7
+              H17
+              A2 2 0 0 0
+              18.9 15.3
+              L21 8 H6
+            "
+          />
+
+          <circle
+            cx="10"
+            cy="20"
+            r="1.4"
+          />
+
+          <circle
+            cx="18"
+            cy="20"
+            r="1.4"
+          />
+
+        </svg>
+
+        <span
+          class="cart-count"
+          id="cartCount"
+        >
+          0
+        </span>
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ==================================================
+       BOTÓN FLOTANTE "REGRESAR ARRIBA"
+  ================================================== -->
+  <button
+    class="back-to-top"
+    id="backToTopButton"
+    aria-label="Regresar arriba"
+  >
+    <svg viewBox="0 0 24 24">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
+
+  <!-- ==================================================
+       SEARCH
+  ================================================== -->
+
+  <div
+    class="search-panel"
+    id="searchPanel"
+    aria-label="Panel de búsqueda"
+  >
+
+    <form
+      class="search-form"
+      id="searchForm"
+      onsubmit="handleSearch(event)"
+    >
+
+      <input
+        type="text"
+        class="search-input"
+        id="searchInput"
+        placeholder="Buscar productos..."
+        required
+      >
+
+      <button
+        type="submit"
+        class="search-submit"
+      >
+        IR
+      </button>
+
+    </form>
+
+  </div>
+
+
+  <!-- ==================================================
+       MENU
+  ================================================== -->
+
+  <nav
+    class="menu-panel"
+    id="menuPanel"
+    aria-label="Menú principal"
+  >
+
+    <div class="menu-title">
+      STREEDHN / MENU
+    </div>
+
+    <ul class="menu-list">
+
+      <li>
+        <a href="../">
+          INICIO
+        </a>
+      </li>
+
+      <li>
+        <a href="../Camisas/">
+          CAMISAS
+        </a>
+      </li>
+
+      <li>
+        <a href="../Gorras/">
+          GORRAS
+        </a>
+      </li>
+
+      <li>
+        <a href="../Hoodies/">
+          HOODIES
+        </a>
+      </li>
+<li>
+        <a href="../Streed%20Sets/">
+          STREED SETS
+        </a>
+      </li>
+
+      <li>
+        <a href="../Personalizacion/">
+          PERSONALIZACIÓN
+        </a>
+      </li>
+
+    </ul>
+
+  </nav>
+
+
+  <!-- ==================================================
+       CART
+  ================================================== -->
+
+  <aside
+    class="cart-panel"
+    id="cartPanel"
+    aria-label="Carrito de compras"
+  >
+
+    <div class="cart-header">
+
+      <h2>
+        YOUR CART
+      </h2>
+
+      <button
+        class="cart-close"
+        id="cartClose"
+        aria-label="Cerrar carrito"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <div
+      class="cart-content"
+      id="cartContent"
+    >
+
+      <svg
+        class="cart-empty-icon cart-icon"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+
+        <path
+          d="
+            M3 4 H5
+            L7.2 15.1
+            A2 2 0 0 0
+            9.2 16.7
+            H17
+            A2 2 0 0 0
+            18.9 15.3
+            L21 8 H6
+          "
+        />
+
+        <circle
+          cx="10"
+          cy="20"
+          r="1.4"
+        />
+
+        <circle
+          cx="18"
+          cy="20"
+          r="1.4"
+        />
+
+      </svg>
+
+
+      <div class="cart-empty">
+        TU CARRITO ESTÁ VACÍO
+      </div>
+
+
+      <div class="cart-empty-subtitle">
+        Aquí aparecerán tus productos.
+      </div>
+
+    </div>
+
+
+    <div
+      class="cart-items"
+      id="cartItems"
+    ></div>
+
+
+    <div
+      class="cart-footer"
+      id="cartFooter"
+    >
+
+      <div class="cart-total">
+        <span>TOTAL</span>
+        <strong id="cartTotal">L 0.00</strong>
+      </div>
+    </div>
+
+    <button type="button" class="cart-whatsapp-button" id="cartWhatsappButton" disabled>PEDIR POR WHATSAPP</button>
+
+  </aside>
+
+
+  <!-- ==================================================
+       CATÁLOGO DE GORRAS
+       EDITA SOLO: NOMBRE / PRECIO / IMAGEN.
+       Para otra colección, duplica un bloque <section class="collection">.
+  ================================================== -->
+
+  <main class="shirts-section" id="gorras">
+
+    <div class="caps-intro">
+      <div class="caps-intro-label">STREED STUDIO PRINT</div>
+      <h1>GORRAS</h1>
+    </div>
+
+    <div id="catalogSearchStatus" class="catalog-search-status"></div>
+
+    <section class="collection" id="collection-01">
+      <div class="collection-header">
+        <div class="collection-title">COLLECTION 01</div>
+        <div class="collection-subtitle">STREED ESSENTIALS</div>
+      </div>
+      <div class="product-grid">
+
+        <!-- PRODUCTO 01: cambia nombre, precio e imagen -->
+        <article class="product-card" data-product-name="hillstar cap" data-product-price="200" data-product-image="../images/cap1.PNG" data-product-description="Una propuesta de gorra STREED inspirada en el lenguaje visual de la marca." data-product-sizes="U" data-product-fits="CLASSIC">
+          <div class="product-image-wrap"><img class="product-image" src="../images/cap1.PNG" alt="hillstar cap" loading="lazy"></div>
+          <div class="product-info">
+            <div class="product-name">hillstar cap</div>
+            <div class="product-price">L 200.00</div>
+            
+          </div>
+        </article>
+
+        <!-- PRODUCTO 02 -->
+        <article class="product-card" data-product-name="wor$t girl cap" data-product-price="200" data-product-image="../images/cap2.jpeg" data-product-description="Una pieza con actitud Y2K y mensaje directo, creada para quienes quieren una prenda llamativa y fácil de combinar." data-product-sizes="U" data-product-fits="CLASSIC">
+          <div class="product-image-wrap"><img class="product-image" src="../images/cap2.jpeg" alt="wor$t girl cap" loading="lazy"></div>
+          <div class="product-info">
+            <div class="product-name">wor$t girl cap</div>
+            <div class="product-price">L 200.00</div>
+            
+          </div>
+        </article>
+
+        <!-- PRODUCTO 03 -->
+        <article class="product-card" data-product-name="f#ck cap" data-product-price="200" data-product-image="../images/cap3.PNG" data-product-description="Diseño de estética gráfica STREED con contraste fuerte y una identidad urbana pensada para el uso diario." data-product-sizes="U" data-product-fits="CLASSIC">
+          <div class="product-image-wrap"><img class="product-image" src="../images/cap3.PNG" alt="f#ck cap" loading="lazy"></div>
+          <div class="product-info">
+            <div class="product-name">f#ck cap</div>
+            <div class="product-price">L 200.00</div>
+            
+          </div>
+        </article>
+
+        <!-- PRODUCTO 04 -->
+        <article class="product-card" data-product-name="von-dutch cap" data-product-price="200" data-product-image="../images/cap4.PNG" data-product-description="Una propuesta inspirada en la despedida y la nostalgia, llevada a una composición limpia con el lenguaje visual de STREED." data-product-sizes="U" data-product-fits="CLASSIC">
+          <div class="product-image-wrap"><img class="product-image" src="../images/cap4.PNG" alt="STREED CAP 04" loading="lazy"></div>
+          <div class="product-info">
+            <div class="product-name">von-dutch cap</div>
+            <div class="product-price">L 200.00</div>
+            
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <section class="random-recommendation" id="ademas-te-puede-gustar">
+    <div class="random-recommendation-head">
+      <div class="random-recommendation-label">STREED / EXPLORE MORE</div>
+      <h2>ADEMÁS TE PUEDE GUSTAR</h2>
+    </div>
+    <div class="random-recommendation-grid" id="randomRecommendationGrid"></div>
+  </section>
+
+  <!-- WARNING MODAL -->
+  <div class="selection-warning-modal" id="selectionWarningModal" aria-hidden="true">
+    <div class="selection-warning-box" role="alertdialog" aria-modal="true" aria-labelledby="selectionWarningTitle">
+      <div class="selection-warning-icon">!</div>
+      <h3 id="selectionWarningTitle">FALTA INFORMACIÓN</h3>
+      <p id="selectionWarningMessage">Selecciona una talla y un estilo antes de continuar.</p>
+      <button type="button" id="selectionWarningClose">ENTENDIDO</button>
+    </div>
+  </div>
+
+  <!-- PRODUCT DETAIL MODAL -->
+  <div class="product-modal" id="productModal" aria-hidden="true">
+    <div class="product-modal-box" role="dialog" aria-modal="true" aria-labelledby="productModalTitle">
+      <button type="button" class="product-modal-close" id="productModalClose" aria-label="Cerrar">×</button>
+      <div class="product-modal-image-wrap"><img class="product-modal-image" id="productModalImage" src="" alt=""></div>
+      <div class="product-modal-info">
+        <div class="product-modal-label">STREED STUDIO PRINT</div>
+        <h2 class="product-modal-title" id="productModalTitle"></h2>
+        <div class="product-modal-price" id="productModalPrice"></div>
+        <div class="product-modal-subtotal"><span>SUBTOTAL</span><strong id="productModalSubtotal">L 0.00</strong></div>
+        <p class="product-modal-description" id="productModalDescription"></p>
+        <div class="product-option-group"><span class="product-option-label">TALLA</span><div class="product-options" id="productSizeOptions"></div></div>
+        <div class="product-option-group"><span class="product-option-label">ESTILO</span><div class="product-options" id="productFitOptions"></div></div>
+        <div class="product-option-group"><span class="product-option-label">CANTIDAD</span><div class="product-quantity"><button type="button" id="productQtyMinus">−</button><span id="productQty">1</span><button type="button" id="productQtyPlus">+</button></div></div>
+        <div class="product-modal-actions"><button type="button" class="product-modal-action cart" id="productAddCart">AÑADIR AL CARRITO</button><button type="button" class="product-modal-action whatsapp" id="productOrderWhatsapp">PEDIR POR WHATSAPP</button></div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <script src="gorras.js"></script>
+</body>
+
+</html>
