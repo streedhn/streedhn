@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>STREEDHN - STREED SETS</title>
+<link href="../images/ENCABEZADO.PNG?v=3" rel="icon" sizes="any" type="image/png"/>
+<link href="../images/ENCABEZADO.PNG?v=3" rel="shortcut icon" type="image/png"/>
+<link href="../images/ENCABEZADO.PNG?v=3" rel="apple-touch-icon"/>
+<link rel="stylesheet" href="streed-sets.css">
+</head>
+<body class="streed-sets-page">
+<!-- ==================================================
+       PAGE LOADER
+  ================================================== -->
+<div aria-hidden="true" class="page-loader" id="pageLoader">
+<div class="loader-logo">
+<img alt="" src="../images/LOGOTIPO.PNG"/>
+</div>
+</div>
+<!-- ==================================================
+       LOGO ESTÁTICO (PERMANECE ARRIBA AL HACER SCROLL)
+  ================================================== -->
+<a aria-label="Ir al inicio" class="logo-link" href="../">
+<img alt="Logo STREEDHN" class="logo" src="../images/LOGOTIPO.PNG"/>
+</a>
+<!-- ==================================================
+       CONTROLES
+  ================================================== -->
+<div class="site-controls">
+<button aria-expanded="false" aria-label="Abrir menú" class="control-button" id="menuButton">
+<span class="hamburger">
+<span></span>
+<span></span>
+<span></span>
+</span>
+</button>
+<div class="controls-right">
+<button aria-expanded="false" aria-label="Abrir buscador" class="control-button" id="searchButton">
+<svg aria-hidden="true" class="search-icon" viewbox="0 0 24 24">
+<circle cx="11" cy="11" r="8"></circle>
+<line x1="21" x2="16.65" y1="21" y2="16.65"></line>
+</svg>
+</button>
+<button aria-expanded="false" aria-label="Abrir carrito" class="control-button" id="cartButton">
+<svg aria-hidden="true" class="cart-icon" viewbox="0 0 24 24">
+<path d="
+              M3 4 H5
+              L7.2 15.1
+              A2 2 0 0 0
+              9.2 16.7
+              H17
+              A2 2 0 0 0
+              18.9 15.3
+              L21 8 H6
+            "></path>
+<circle cx="10" cy="20" r="1.4"></circle>
+<circle cx="18" cy="20" r="1.4"></circle>
+</svg>
+<span class="cart-count" id="cartCount">
+          0
+        </span>
+</button>
+</div>
+</div>
+<!-- ==================================================
+       BOTÓN FLOTANTE "REGRESAR ARRIBA"
+  ================================================== -->
+<button class="back-to-top" id="backToTopButton" aria-label="Regresar arriba">
+  <svg viewBox="0 0 24 24">
+    <polyline points="18 15 12 9 6 15"></polyline>
+  </svg>
+</button>
+
+<!-- ==================================================
+       SEARCH
+  ================================================== -->
+<div aria-label="Panel de búsqueda" class="search-panel" id="searchPanel">
+<form class="search-form" id="searchForm" onsubmit="handleSearch(event)">
+<input class="search-input" id="searchInput" placeholder="Buscar productos..." required="" type="text"/>
+<button class="search-submit" type="submit">
+        IR
+      </button>
+</form>
+</div>
+<!-- ==================================================
+       MENU
+  ================================================== -->
+<nav aria-label="Menú principal" class="menu-panel" id="menuPanel">
+<div class="menu-title">
+      STREEDHN / MENU
+    </div>
+<ul class="menu-list">
+<li>
+<a href="../">
+          INICIO
+        </a>
+</li>
+<li>
+<a href="../Camisas/">
+          CAMISAS
+        </a>
+</li>
+<li>
+<a href="../Gorras/">
+          GORRAS
+        </a>
+</li>
+<li>
+<a href="../Hoodies/">
+          HOODIES
+        </a>
+</li>
+<li>
+<a href="../Streed-Sets/">
+          STREED SETS
+        </a>
+</li>
+<li>
+<a href="../Personalizacion/">
+          PERSONALIZACIÓN
+        </a>
+</li>
+</ul>
+</nav>
+<!-- ==================================================
+       CART
+  ================================================== -->
+<aside aria-label="Carrito de compras" class="cart-panel" id="cartPanel">
+<div class="cart-header">
+<h2>
+        YOUR CART
+      </h2>
+<button aria-label="Cerrar carrito" class="cart-close" id="cartClose">
+        ×
+      </button>
+</div>
+<div class="cart-content" id="cartContent">
+<svg aria-hidden="true" class="cart-empty-icon cart-icon" viewbox="0 0 24 24">
+<path d="
+            M3 4 H5
+            L7.2 15.1
+            A2 2 0 0 0
+            9.2 16.7
+            H17
+            A2 2 0 0 0
+            18.9 15.3
+            L21 8 H6
+          "></path>
+<circle cx="10" cy="20" r="1.4"></circle>
+<circle cx="18" cy="20" r="1.4"></circle>
+</svg>
+<div class="cart-empty">
+        TU CARRITO ESTÁ VACÍO
+      </div>
+<div class="cart-empty-subtitle">
+        Aquí aparecerán tus productos.
+      </div>
+</div>
+<div class="cart-items" id="cartItems"></div>
+<div class="cart-footer" id="cartFooter">
+<div class="cart-total">
+<span>TOTAL</span>
+<strong id="cartTotal">L 0.00</strong>
+</div>
+</div>
+<button class="cart-whatsapp-button" disabled="" id="cartWhatsappButton" type="button">PEDIR POR WHATSAPP</button>
+</aside>
+<!-- ==================================================
+       CATÁLOGO DE GORRAS
+       EDITA SOLO: NOMBRE / PRECIO / IMAGEN.
+       Para otra colección, duplica un bloque <section class="collection">.
+  ================================================== -->
+<main class="shirts-section" id="streed-sets">
+<div class="caps-intro">
+<div class="caps-intro-label">STREED STUDIOS</div>
+<h1>STREED SETS</h1>
+</div>
+<div class="catalog-search-status" id="catalogSearchStatus"></div>
+
+<section class="collection" id="collection-01"><div class="collection-header"><div class="collection-title">STREED SETS</div><div class="collection-subtitle">COMPLETE THE LOOK</div></div><div class="product-grid"><!--
+        PRODUCTO 1: cambia solamente nombre, precio e imagen.
+      --><article class="product-card" data-product-description="STREED SET que incluye 1 camisa + 1 gorra + 1 phone case. Selecciona este set y agrégalo al carrito para completar tu pedido." data-product-fits="SET" data-product-image="../images/set1.PNG" data-product-name="STREED SET 01" data-product-price="799" data-product-sizes="U"><div class="product-image-wrap"><img alt="STREED SET CORE" class="product-image" loading="lazy" src="../images/set1.PNG"/></div><div class="product-info"><div class="product-name">STREED SET 01</div><div class="product-price">L 799.00</div><button class="add-cart-button" data-add-cart="" type="button">AÑADIR AL CARRITO</button></div></article><!--
+
+        PRODUCTO 2: cambia solamente nombre, precio e imagen.
+      --><article class="product-card" data-product-description="STREED SET que incluye 2 camisas + 2 phone cases. Selecciona este set y agrégalo al carrito para completar tu pedido." data-product-fits="SET" data-product-image="../images/set2.PNG" data-product-name="STREED SET 02" data-product-price="1199" data-product-sizes="U"><div class="product-image-wrap"><img alt="STREED SET 02" class="product-image" loading="lazy" src="../images/set2.PNG"/></div><div class="product-info"><div class="product-name">STREED SET 02</div><div class="product-price">L 1199.00</div><button class="add-cart-button" data-add-cart="" type="button">AÑADIR AL CARRITO</button></div></article><!--
+        
+	PRODUCTO 3: cambia solamente nombre, precio e imagen.
+      --><article class="product-card" data-product-description="STREED SET que incluye 1 camisa + 1 gorra. Selecciona este set y agrégalo al carrito para completar tu pedido." data-product-fits="SET" data-product-image="../images/set3.PNG" data-product-name="STREED SET 03" data-product-price="499" data-product-sizes="U"><div class="product-image-wrap"><img alt="STREED SET 03" class="product-image" loading="lazy" src="../images/set3.PNG"/></div><div class="product-info"><div class="product-name">STREED SET 03</div><div class="product-price">L 499.00</div><button class="add-cart-button" data-add-cart="" type="button">AÑADIR AL CARRITO</button></div></article></div></section></main><div class="catalog-search-status" style="display:block;max-width:1100px;margin:0 auto 30px;text-align:center;"></div>
+
+<!-- ADEMÁS TE PUEDE GUSTAR -->
+<section class="random-recommendation" id="ademas-te-puede-gustar">
+  <div class="random-recommendation-head">
+    <div class="random-recommendation-label">STREED / EXPLORE MORE</div>
+    <h2>ADEMÁS TE PUEDE GUSTAR</h2>
+  </div>
+  <div class="random-recommendation-grid" id="randomRecommendationGrid"></div>
+</section>
+
+<!-- PRODUCT DETAIL MODAL -->
+<div aria-hidden="true" class="product-modal" id="productModal">
+<div aria-labelledby="productModalTitle" aria-modal="true" class="product-modal-box" role="dialog">
+<button aria-label="Cerrar" class="product-modal-close" id="productModalClose" type="button">×</button>
+<div class="product-modal-image-wrap"><img alt="" class="product-modal-image" id="productModalImage" src=""/></div>
+<div class="product-modal-info">
+<div class="product-modal-label">STREED STUDIOS</div>
+<h2 class="product-modal-title" id="productModalTitle"></h2>
+<div class="product-modal-price" id="productModalPrice"></div>
+<div class="product-modal-subtotal"><span>SUBTOTAL</span><strong id="productModalSubtotal">L 0.00</strong></div>
+<p class="product-modal-description" id="productModalDescription"></p>
+<div class="product-option-group set-config"><span class="product-option-label">TALLA</span><div class="product-options" id="productSizeOptions"></div></div>
+<div class="product-option-group set-config"><span class="product-option-label">ESTILO</span><div class="product-options" id="productFitOptions"></div></div>
+<div class="product-option-group"><span class="product-option-label">CANTIDAD</span><div class="product-quantity"><button id="productQtyMinus" type="button">−</button><span id="productQty">1</span><button id="productQtyPlus" type="button">+</button></div></div>
+<div class="product-modal-actions"><button class="product-modal-action cart" id="productAddCart" type="button">AÑADIR AL CARRITO</button><button class="product-modal-action whatsapp" id="productOrderWhatsapp" type="button">PEDIR POR WHATSAPP</button></div>
+</div>
+</div>
+</div>
+
+  <script src="streed-sets.js"></script>
+</body>
+</html>
