@@ -1,8 +1,21 @@
+
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://streedhn.com/</loc>
   </url>
   <url>
     <loc>https://streedhn.com/Camisas/</loc>
+  </url>
+  <url>
+    <loc>https://streedhn.com/Hoodies/</loc>
+  </url>
+  <url>
+    <loc>https://streedhn.com/Gorras/</loc>
+  </url>
+  <url>
+    <loc>https://streedhn.com/Personalizacion/</loc>
+  </url>
+  <url>
+    <loc>https://streedhn.com/Streed-Sets/</loc>
   </url>
 </urlset>
