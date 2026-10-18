@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  >
+
+  <title>STREEDHN - PERSONALIZACIÓN</title>
+
+  <link rel="icon" type="image/png" sizes="any" href="../images/ENCABEZADO.PNG?v=3">
+  <link rel="shortcut icon" type="image/png" href="../images/ENCABEZADO.PNG?v=3">
+  <link rel="apple-touch-icon" href="../images/ENCABEZADO.PNG?v=3">
+
+
+<link rel="stylesheet" href="personalizacion.css">
+
+</head>
+
+
+<body>
+
+
+  <!-- ==================================================
+       PAGE LOADER
+  ================================================== -->
+
+  <div
+    class="page-loader"
+    id="pageLoader"
+    aria-hidden="true"
+  >
+
+    <div class="loader-logo">
+
+      <img
+        src="../images/LOGOTIPO.PNG"
+        alt=""
+      >
+
+    </div>
+
+  </div>
+
+
+  <!-- ==================================================
+       LOGO ESTÁTICO (PERMANECE ARRIBA AL HACER SCROLL)
+  ================================================== -->
+
+  <a
+    href="../"
+    class="logo-link"
+    aria-label="Ir al inicio"
+  >
+
+    <img
+      src="../images/LOGOTIPO.PNG"
+      alt="Logo STREEDHN"
+      class="logo"
+    >
+
+  </a>
+
+
+  <!-- ==================================================
+       CONTROLES (ICONOS DE LOS COSTADOS FIJOS)
+  ================================================== -->
+
+  <div class="site-controls">
+
+    <button
+      class="control-button"
+      id="menuButton"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+    >
+
+      <span class="hamburger">
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+      </span>
+
+    </button>
+
+
+    <div class="controls-right">
+
+      <button
+        class="control-button"
+        id="searchButton"
+        aria-label="Abrir buscador"
+        aria-expanded="false"
+      >
+
+        <svg
+          class="search-icon"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+
+          <circle
+            cx="11"
+            cy="11"
+            r="8"
+          />
+
+          <line
+            x1="21"
+            y1="21"
+            x2="16.65"
+            y2="16.65"
+          />
+
+        </svg>
+
+      </button>
+
+
+      <button
+        class="control-button"
+        id="cartButton"
+        aria-label="Abrir carrito"
+        aria-expanded="false"
+      >
+
+        <svg
+          class="cart-icon"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+
+          <path
+            d="
+              M3 4 H5
+              L7.2 15.1
+              A2 2 0 0 0
+              9.2 16.7
+              H17
+              A2 2 0 0 0
+              18.9 15.3
+              L21 8 H6
+            "
+          />
+
+          <circle
+            cx="10"
+            cy="20"
+            r="1.4"
+          />
+
+          <circle
+            cx="18"
+            cy="20"
+            r="1.4"
+          />
+
+        </svg>
+
+        <span
+          class="cart-count"
+          id="cartCount"
+        >
+          0
+        </span>
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ==================================================
+       BOTÓN FLOTANTE "REGRESAR ARRIBA"
+  ================================================== -->
+  <button
+    class="back-to-top"
+    id="backToTopButton"
+    aria-label="Regresar arriba"
+  >
+    <svg viewBox="0 0 24 24">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
+
+  <!-- ==================================================
+       SEARCH
+  ================================================== -->
+
+  <div
+    class="search-panel"
+    id="searchPanel"
+    aria-label="Panel de búsqueda"
+  >
+
+    <form
+      class="search-form"
+      id="searchForm"
+      onsubmit="handleSearch(event)"
+    >
+
+      <input
+        type="text"
+        class="search-input"
+        id="searchInput"
+        placeholder="Buscar productos..."
+        required
+      >
+
+      <button
+        type="submit"
+        class="search-submit"
+      >
+        IR
+      </button>
+
+    </form>
+
+  </div>
+
+
+  <!-- ==================================================
+       MENU
+  ================================================== -->
+
+  <nav
+    class="menu-panel"
+    id="menuPanel"
+    aria-label="Menú principal"
+  >
+
+    <div class="menu-title">
+      STREEDHN / MENU
+    </div>
+
+    <ul class="menu-list">
+
+      <li>
+        <a href="../">
+          INICIO
+        </a>
+      </li>
+
+      <li>
+        <a href="../Camisas/">
+          CAMISAS
+        </a>
+      </li>
+
+      <li>
+        <a href="../Gorras/">
+          GORRAS
+        </a>
+      </li>
+
+      <li>
+        <a href="../Hoodies/">
+          HOODIES
+        </a>
+      </li>
+
+      <li>
+        <a href="../Streed-Sets/">
+          STREED SETS
+        </a>
+      </li>
+
+      <li>
+        <a href="../Personalizacion/">
+          PERSONALIZACIÓN
+        </a>
+      </li>
+
+    </ul>
+
+  </nav>
+
+
+  <!-- ==================================================
+       CART
+  ================================================== -->
+
+  <aside
+    class="cart-panel"
+    id="cartPanel"
+    aria-label="Carrito de compras"
+  >
+
+    <div class="cart-header">
+
+      <h2>
+        YOUR CART
+      </h2>
+
+      <button
+        class="cart-close"
+        id="cartClose"
+        aria-label="Cerrar carrito"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <div
+      class="cart-content"
+      id="cartContent"
+    >
+
+      <svg
+        class="cart-empty-icon cart-icon"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+
+        <path
+          d="
+            M3 4 H5
+            L7.2 15.1
+            A2 2 0 0 0
+            9.2 16.7
+            H17
+            A2 2 0 0 0
+            18.9 15.3
+            L21 8 H6
+          "
+        />
+
+        <circle
+          cx="10"
+          cy="20"
+          r="1.4"
+        />
+
+        <circle
+          cx="18"
+          cy="20"
+          r="1.4"
+        />
+
+      </svg>
+
+
+      <div class="cart-empty">
+        TU CARRITO ESTÁ VACÍO
+      </div>
+
+
+      <div class="cart-empty-subtitle">
+        Aquí aparecerán tus productos.
+      </div>
+
+    </div>
+
+
+    <div
+      class="cart-items"
+      id="cartItems"
+    ></div>
+
+
+    <div
+      class="cart-footer"
+      id="cartFooter"
+    >
+
+      <div class="cart-total">
+        <span>TOTAL</span>
+        <strong id="cartTotal">L 0.00</strong>
+      </div>
+    </div>
+
+    <button type="button" class="cart-whatsapp-button" id="cartWhatsappButton" disabled>PEDIR POR WHATSAPP</button>
+
+  </aside>
+
+
+  <!-- ==================================================
+       CATÁLOGO DE HOODIES
+  ================================================== -->
+
+  <main class="custom-page" id="custom">
+
+  <section class="custom-hero">
+    <div class="custom-watermark" aria-hidden="true">CUSTOM</div>
+
+    <div class="custom-content">
+      <div class="custom-label">STREED / CUSTOM</div>
+
+      <h1>
+        YOUR IDEA.<br>
+        <span>YOUR WAY.</span>
+      </h1>
+
+      <p>
+        Personaliza tu prenda y hazla realmente tuya.
+      </p>
+
+      <a
+        class="custom-whatsapp"
+        href="https://wa.me/50489055186?text=Hola%20STREED%2C%20quiero%20personalizar%20una%20prenda.%20Me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n%20sobre%20opciones%2C%20precios%20y%20dise%C3%B1os."
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span>PERSONALIZA POR WHATSAPP</span>
+        <span class="custom-arrow">→</span>
+      </a>
+    </div>
+
+    <div class="custom-bottom">
+      <span>CAMISAS</span>
+      <i></i>
+      <span>HOODIES</span>
+      <i></i>
+      <span>GORRAS</span>
+    </div>
+  </section>
+
+  <section class="custom-steps" aria-label="Proceso de personalización">
+
+    <div class="custom-steps-head">
+      <div class="custom-steps-label">STREED / CUSTOM PROCESS</div>
+      <h2>HOW IT WORKS.</h2>
+    </div>
+
+    <div class="custom-step">
+      <div class="custom-step-number">01</div>
+      <div class="custom-step-content">
+        <h3>ELIGE TU PRENDA.</h3>
+        <p>Cuéntanos si quieres personalizar una camisa, hoodie o gorra.</p>
+      </div>
+    </div>
+
+    <div class="custom-step">
+      <div class="custom-step-number">02</div>
+      <div class="custom-step-content">
+        <h3>CUÉNTANOS TU IDEA.</h3>
+        <p>Explícanos qué quieres hacer. Puedes partir de una idea, imagen, frase o diseño.</p>
+      </div>
+    </div>
+
+    <div class="custom-step">
+      <div class="custom-step-number">03</div>
+      <div class="custom-step-content">
+        <h3>ENVÍANOS TU DISEÑO.</h3>
+        <p>Si ya tienes el diseño, puedes enviárnoslo directamente por WhatsApp.</p>
+      </div>
+    </div>
+
+    <div class="custom-step">
+      <div class="custom-step-number">04</div>
+      <div class="custom-step-content">
+        <h3>DEFINIMOS LOS DETALLES.</h3>
+        <p>Hablamos contigo sobre talla, color, ubicación del diseño, cantidad y precio.</p>
+      </div>
+    </div>
+
+    <div class="custom-step">
+      <div class="custom-step-number">05</div>
+      <div class="custom-step-content">
+        <h3>WE MAKE IT REAL.</h3>
+        <p>Una vez aprobado todo, producimos tu pieza y te indicamos cómo continuar con tu pedido.</p>
+      </div>
+    </div>
+
+    <div class="custom-steps-cta">
+      <p>¿TIENES UNA IDEA?</p>
+      <a class="custom-whatsapp custom-whatsapp-steps" href="https://wa.me/50489055186?text=Hola%20STREED%2C%20quiero%20personalizar%20una%20prenda.%20Me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n%20sobre%20opciones%2C%20precios%20y%20dise%C3%B1os." target="_blank" rel="noopener noreferrer">
+        <span>HABLAR POR WHATSAPP</span>
+        <span class="custom-arrow">→</span>
+      </a>
+    </div>
+
+  </section>
+
+</main>
+
+  <!-- WARNING MODAL -->
+  <div class="selection-warning-modal" id="selectionWarningModal" aria-hidden="true">
+    <div class="selection-warning-box" role="alertdialog" aria-modal="true" aria-labelledby="selectionWarningTitle">
+      <div class="selection-warning-icon">!</div>
+      <h3 id="selectionWarningTitle">FALTA INFORMACIÓN</h3>
+      <p id="selectionWarningMessage">Selecciona una talla y un color antes de continuar.</p>
+      <button type="button" id="selectionWarningClose">ENTENDIDO</button>
+    </div>
+  </div>
+
+  <!-- SIZE GUIDE MODAL -->
+  <div class="size-guide-modal" id="sizeGuideModal" aria-hidden="true">
+    <div class="size-guide-content">
+      <button type="button" class="size-guide-close" id="sizeGuideCloseBtn">CERRAR</button>
+      <h3>GUÍA DE TALLAS & CUIDADOS</h3>
+      <p>Todas nuestras prendas cuentan con un corte <strong>Oversize</strong> auténtico y relajado. Consulta las medidas aproximadas:</p>
+      <table class="size-guide-table">
+        <thead>
+          <tr>
+            <th>Talla</th>
+            <th>Ancho (Sisa a Sisa)</th>
+            <th>Largo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>S</td><td>52 cm</td><td>70 cm</td></tr>
+          <tr><td>M</td><td>55 cm</td><td>72 cm</td></tr>
+          <tr><td>L</td><td>58 cm</td><td>74 cm</td></tr>
+          <tr><td>XL</td><td>61 cm</td><td>76 cm</td></tr>
+          <tr><td>XXL</td><td>64 cm</td><td>78 cm</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size: 11px; color: #777; margin-bottom: 20px;">* Te recomendamos elegir tu talla habitual para un look oversize relajado.</p>
+      
+      <h4>CUIDADOS DE LA PRENDA</h4>
+      <ul>
+        <li>Lavar a mano o en ciclo delicado con agua fría (máx. 30°C).</li>
+        <li>Lavar y planchar la prenda <strong>al revés</strong> para proteger el estampado.</li>
+        <li>No usar blanqueador ni cloro.</li>
+        <li>No secar en máquina (secadora); secar colgada a la sombra.</li>
+        <li>No planchar directamente sobre el diseño impreso.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PRODUCT DETAIL MODAL -->
+  <div class="product-modal" id="productModal" aria-hidden="true">
+    <div class="product-modal-box" role="dialog" aria-modal="true" aria-labelledby="productModalTitle">
+      <button type="button" class="product-modal-close" id="productModalClose" aria-label="Cerrar">×</button>
+      <div class="product-modal-image-wrap" id="modalImageWrap">
+        <button type="button" class="modal-slider-btn modal-slider-prev" id="modalPrevBtn" aria-label="Anterior">‹</button>
+        <div class="modal-image-track" id="modalImageTrack"></div>
+        <button type="button" class="modal-slider-btn modal-slider-next" id="modalNextBtn" aria-label="Siguiente">›</button>
+        <div class="modal-slider-dots" id="modalSliderDots">
+          <span class="modal-dot active" data-index="0"></span>
+          <span class="modal-dot" data-index="1"></span>
+          <span class="modal-dot" data-index="2"></span>
+          <span class="modal-dot" data-index="3"></span>
+        </div>
+      </div>
+      <div class="product-modal-info">
+        <div class="product-modal-label">STREED STUDIOS</div>
+        <h2 class="product-modal-title" id="productModalTitle"></h2>
+        <div class="product-modal-price" id="productModalPrice"></div>
+        <div class="product-modal-subtotal"><span>SUBTOTAL</span><strong id="productModalSubtotal">L 350.00</strong></div>
+        <p class="product-modal-description" id="productModalDescription"></p>
+        
+        <!-- TALLA Y GUÍA DE TALLAS -->
+        <div class="product-option-group">
+          <span class="product-option-label">TALLA <button type="button" class="size-guide-btn" id="openSizeGuideBtn">Guía de Tallas & Cuidados</button></span>
+          <div class="product-options" id="productSizeOptions"></div>
+        </div>
+
+        <!-- COLOR -->
+        <div class="product-option-group">
+          <span class="product-option-label">COLOR</span>
+          <div class="product-options" id="productColorOptions"></div>
+        </div>
+
+        <div class="product-option-group">
+          <span class="product-option-label">CANTIDAD</span>
+          <div class="product-quantity"><button type="button" id="productQtyMinus">−</button><span id="productQty">1</span><button type="button" id="productQtyPlus">+</button></div>
+        </div>
+        <div class="product-modal-actions"><button type="button" class="product-modal-action cart" id="productAddCart">AÑADIR AL CARRITO</button><button type="button" class="product-modal-action whatsapp" id="productOrderWhatsapp">PEDIR POR WHATSAPP</button></div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <script src="personalizacion.js"></script>
+</body>
+
+</html>
