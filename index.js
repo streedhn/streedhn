@@ -800,20 +800,6 @@
 
     );
 
-
-    logo.style.width =
-      `${getStartSize()}px`;
-
-    logo.dataset.final =
-      "false";
-
-    requestAnimationFrame(
-      animateLogo
-    );
-
-  
-;
-
 (function () {
   const STORAGE_KEY = "streed_cart_v1";
   const cartItemsEl = document.getElementById("cartItems");
