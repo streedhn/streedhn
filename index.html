@@ -1,0 +1,634 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>STREED STUDIOS</title>
+
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+  <style>
+    @font-face {
+      font-family: "Futura";
+      src: url("fonts/Futura-BoldItalic.woff2") format("woff2");
+      font-weight: bold;
+      font-style: italic;
+      font-display: swap;
+    }
+
+    :root {
+      --red: #e60012;
+      --black: #111111;
+      --white: #ffffff;
+      --gray: #777777;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--white);
+      color: var(--black);
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* GRID BACKGROUND */
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .22;
+      background-image:
+        linear-gradient(#e8e8e8 1px, transparent 1px),
+        linear-gradient(90deg, #e8e8e8 1px, transparent 1px);
+      background-size: 42px 42px;
+      z-index: -1;
+    }
+
+    /* MAIN LAYOUT */
+
+    .page {
+      min-height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 165px 20px 55px;
+      position: relative;
+    }
+
+    /* DECORATIVE CORNERS */
+
+    .corner {
+      position: fixed;
+      width: 35px;
+      height: 35px;
+      border-color: var(--red);
+      border-style: solid;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .corner.top-left {
+      top: 24px;
+      left: 24px;
+      border-width: 1px 0 0 1px;
+    }
+
+    .corner.top-right {
+      top: 24px;
+      right: 24px;
+      border-width: 1px 1px 0 0;
+    }
+
+    .corner.bottom-left {
+      bottom: 24px;
+      left: 24px;
+      border-width: 0 0 1px 1px;
+    }
+
+    .corner.bottom-right {
+      bottom: 24px;
+      right: 24px;
+      border-width: 0 1px 1px 0;
+    }
+
+    /* LOGO */
+
+    .logo-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 35px;
+      left: 0;
+      right: 0;
+      padding: 0 20px;
+    }
+
+    .logo {
+      display: block;
+      width: clamp(180px, 24vw, 290px);
+      max-width: 75vw;
+      height: auto;
+      object-fit: contain;
+      animation: appear .8s ease both;
+    }
+
+    /* CONTENT */
+
+    .content {
+      width: 100%;
+      max-width: 650px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      animation: appear .8s ease both;
+    }
+
+    .eyebrow {
+      font-family: "Futura", Arial, sans-serif;
+      font-size: 12px;
+      letter-spacing: 3px;
+      color: var(--red);
+      margin-bottom: 25px;
+      text-transform: uppercase;
+    }
+
+    .puzzles {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .puzzle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 9px;
+      min-height: 58px;
+    }
+
+    .letter {
+      width: 43px;
+      height: 52px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 2px solid var(--black);
+      font-family: "Futura", Arial, sans-serif;
+      font-size: 27px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .letter input {
+      width: 100%;
+      height: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: var(--red);
+      font-family: "Futura", Arial, sans-serif;
+      font-size: 27px;
+      font-weight: bold;
+      text-align: center;
+      text-transform: uppercase;
+      caret-color: var(--red);
+    }
+
+    .letter input:focus {
+      border: none;
+    }
+
+    .letter input::placeholder {
+      color: #d5d5d5;
+    }
+
+    .letter.fixed {
+      color: var(--black);
+    }
+
+    .puzzle.correct .letter {
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    .puzzle.correct .letter input {
+      color: var(--red);
+    }
+
+    /* COMING SOON */
+
+    .coming-soon {
+      margin-top: 55px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .coming-soon h2 {
+      font-family: "Futura", Arial, sans-serif;
+      font-size: 15px;
+      letter-spacing: 4px;
+      font-weight: bold;
+      color: var(--black);
+    }
+
+    .coming-soon p {
+      margin-top: 9px;
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: var(--gray);
+      text-transform: uppercase;
+    }
+
+    /* LOADING BAR */
+
+    .loader {
+      width: 155px;
+      height: 3px;
+      background: #e8e8e8;
+      margin-top: 17px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .loader::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 12%;
+      background: var(--red);
+      animation: loading 2.8s ease-in-out infinite alternate;
+    }
+
+    @keyframes loading {
+      0% {
+        width: 12%;
+      }
+      100% {
+        width: 82%;
+      }
+    }
+
+    /* SOCIAL ICONS */
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+      margin-top: 28px;
+    }
+
+    .social-icons a {
+      width: 21px;
+      height: 21px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--black);
+      transition: color .25s ease, transform .25s ease;
+    }
+
+    .social-icons svg {
+      width: 100%;
+      height: 100%;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .social-icons svg .filled {
+      fill: currentColor;
+      stroke: none;
+    }
+
+    .social-icons a:hover {
+      color: var(--red);
+      transform: translateY(-3px);
+    }
+
+    /* ANIMATIONS */
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* TABLET */
+
+    @media (max-width: 768px) {
+      .page {
+        padding-top: 145px;
+      }
+
+      .puzzles {
+        gap: 20px;
+      }
+
+      .letter {
+        width: 39px;
+        height: 48px;
+        font-size: 24px;
+      }
+
+      .letter input {
+        font-size: 24px;
+      }
+
+      .coming-soon {
+        margin-top: 45px;
+      }
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 600px) {
+      .logo-container {
+        top: 25px;
+      }
+
+      .logo {
+        width: clamp(155px, 45vw, 200px);
+        max-width: 75vw;
+      }
+
+      .page {
+        padding: 135px 15px 45px;
+      }
+
+      .eyebrow {
+        font-size: 10px;
+        letter-spacing: 2px;
+        margin-bottom: 22px;
+      }
+
+      .puzzles {
+        gap: 19px;
+      }
+
+      .puzzle {
+        gap: 6px;
+      }
+
+      .letter {
+        width: clamp(32px, 9vw, 39px);
+        height: 45px;
+        font-size: 22px;
+      }
+
+      .letter input {
+        font-size: 22px;
+      }
+
+      .coming-soon {
+        margin-top: 42px;
+      }
+
+      .coming-soon h2 {
+        font-size: 13px;
+        letter-spacing: 3px;
+      }
+
+      .coming-soon p {
+        font-size: 8px;
+      }
+
+      .social-icons {
+        gap: 22px;
+        margin-top: 25px;
+      }
+
+      .corner {
+        width: 24px;
+        height: 24px;
+      }
+
+      .corner.top-left,
+      .corner.top-right {
+        top: 15px;
+      }
+
+      .corner.top-left,
+      .corner.bottom-left {
+        left: 15px;
+      }
+
+      .corner.top-right,
+      .corner.bottom-right {
+        right: 15px;
+      }
+
+      .corner.bottom-left,
+      .corner.bottom-right {
+        bottom: 15px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .puzzle {
+        gap: 4px;
+      }
+
+      .letter {
+        width: 29px;
+        height: 40px;
+        font-size: 19px;
+      }
+
+      .letter input {
+        font-size: 19px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- DECORATIVE CORNERS -->
+  <div class="corner top-left"></div>
+  <div class="corner top-right"></div>
+  <div class="corner bottom-left"></div>
+  <div class="corner bottom-right"></div>
+
+  <!-- CENTERED LOGO -->
+  <header class="logo-container">
+    <img
+      class="logo"
+      src="images/LOGOTIPO.PNG"
+      alt="STREED"
+    >
+  </header>
+
+  <main class="page">
+
+    <section class="content">
+
+     
+
+      <!-- WORD PUZZLES -->
+      <div class="puzzles">
+
+        <!-- CAMISAS -->
+        <div class="puzzle" data-answer="CAMISAS">
+          <span class="letter"><input maxlength="1" aria-label="Letra 1 de CAMISAS"></span>
+          <span class="letter"><input maxlength="1" aria-label="Letra 2 de CAMISAS"></span>
+          <span class="letter"><input maxlength="1" aria-label="Letra 3 de CAMISAS"></span>
+          <span class="letter fixed">I</span>
+          <span class="letter"><input maxlength="1" aria-label="Letra 5 de CAMISAS"></span>
+          <span class="letter fixed">A</span>
+          <span class="letter"><input maxlength="1" aria-label="Letra 7 de CAMISAS"></span>
+        </div>
+
+        <!-- GORRAS -->
+        <div class="puzzle" data-answer="GORRAS">
+          <span class="letter"><input maxlength="1" aria-label="Letra 1 de GORRAS"></span>
+          <span class="letter fixed">O</span>
+          <span class="letter"><input maxlength="1" aria-label="Letra 3 de GORRAS"></span>
+          <span class="letter"><input maxlength="1" aria-label="Letra 4 de GORRAS"></span>
+          <span class="letter fixed">A</span>
+          <span class="letter"><input maxlength="1" aria-label="Letra 6 de GORRAS"></span>
+        </div>
+
+        <!-- HOODIES -->
+        <div class="puzzle" data-answer="HOODIES">
+          <span class="letter"><input maxlength="1" aria-label="Letra 1 de HOODIES"></span>
+          <span class="letter fixed">O</span>
+          <span class="letter"><input maxlength="1" aria-label="Letra 3 de HOODIES"></span>
+          <span class="letter fixed">D</span>
+          <span class="letter"><input maxlength="1" aria-label="Letra 5 de HOODIES"></span>
+          <span class="letter fixed">E</span>
+          <span class="letter"><input maxlength="1" aria-label="Letra 7 de HOODIES"></span>
+        </div>
+
+      </div>
+
+      <!-- COMING SOON -->
+      <div class="coming-soon">
+        <h2>COMING SOON</h2>
+        <p>wear your way</p>
+
+        <div class="loader"></div>
+
+        <!-- SOCIAL MEDIA -->
+        <div class="social-icons">
+
+          <!-- INSTAGRAM -->
+          <a
+            href="https://www.instagram.com/streedhn/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+          >
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="3" width="18" height="18" rx="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="1" class="filled"/>
+            </svg>
+          </a>
+
+          <!-- TIKTOK -->
+          <a
+            href="https://www.tiktok.com/@streedhn"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="TikTok"
+          >
+            <svg viewBox="0 0 24 24">
+              <path d="M14 3v11.2a4.2 4.2 0 1 1-4-4.2"/>
+              <path d="M14 3c.5 3 2.3 4.8 5 5"/>
+            </svg>
+          </a>
+
+          <!-- FACEBOOK -->
+          <a
+            href="https://www.facebook.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook"
+          >
+            <svg viewBox="0 0 24 24">
+              <path d="M14 21v-8h3l.5-4H14V7c0-1.2.4-2 2-2h2V1.5C17.3 1.3 16.2 1 15 1c-3.2 0-5 1.9-5 5.4V9H7v4h3v8z"/>
+            </svg>
+          </a>
+
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    const puzzles = document.querySelectorAll(".puzzle");
+
+    puzzles.forEach((puzzle) => {
+      const answer = puzzle.dataset.answer;
+      const inputs = Array.from(puzzle.querySelectorAll("input"));
+
+      function checkAnswer() {
+        const letters = Array.from(puzzle.querySelectorAll(".letter"));
+
+        const currentWord = letters.map((letter) => {
+          const input = letter.querySelector("input");
+          return input ? input.value.toUpperCase() : letter.textContent.trim();
+        }).join("");
+
+        if (currentWord === answer) {
+          puzzle.classList.add("correct");
+        } else {
+          puzzle.classList.remove("correct");
+        }
+      }
+
+      inputs.forEach((input, index) => {
+        input.addEventListener("input", () => {
+          input.value = input.value
+            .replace(/[^a-zA-Z]/g, "")
+            .slice(0, 1)
+            .toUpperCase();
+
+          if (input.value && inputs[index + 1]) {
+            inputs[index + 1].focus();
+          }
+
+          checkAnswer();
+        });
+
+        input.addEventListener("keydown", (event) => {
+          if (event.key === "Backspace" && !input.value && inputs[index - 1]) {
+            inputs[index - 1].focus();
+          }
+        });
+
+        input.addEventListener("paste", (event) => {
+          event.preventDefault();
+
+          const pasted = event.clipboardData
+            .getData("text")
+            .replace(/[^a-zA-Z]/g, "")
+            .toUpperCase();
+
+          if (pasted.length) {
+            inputs.forEach((field, i) => {
+              field.value = pasted[i] || "";
+            });
+
+            checkAnswer();
+
+            const nextEmpty = inputs.find(field => !field.value);
+            if (nextEmpty) nextEmpty.focus();
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
