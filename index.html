@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
 
-  <title>STREED STUDIOS</title>
-
+  <title>STREED — Coming Soon</title>
   <link rel="icon" type="image/png" href="images/favicon.png">
 
   <style>
@@ -22,6 +22,7 @@
       --red: #e60012;
       --black: #111111;
       --white: #ffffff;
+      --green: #16833b;
       --gray: #777777;
     }
 
@@ -40,8 +41,6 @@
       position: relative;
     }
 
-    /* GRID BACKGROUND */
-
     body::before {
       content: "";
       position: fixed;
@@ -55,7 +54,11 @@
       z-index: -1;
     }
 
-    /* MAIN LAYOUT */
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    /* CONTENEDOR PRINCIPAL */
 
     .page {
       min-height: 100vh;
@@ -68,7 +71,7 @@
       position: relative;
     }
 
-    /* DECORATIVE CORNERS */
+    /* ESQUINAS DECORATIVAS */
 
     .corner {
       position: fixed;
@@ -80,25 +83,25 @@
       pointer-events: none;
     }
 
-    .corner.top-left {
+    .top-left {
       top: 24px;
       left: 24px;
       border-width: 1px 0 0 1px;
     }
 
-    .corner.top-right {
+    .top-right {
       top: 24px;
       right: 24px;
       border-width: 1px 1px 0 0;
     }
 
-    .corner.bottom-left {
+    .bottom-left {
       bottom: 24px;
       left: 24px;
       border-width: 0 0 1px 1px;
     }
 
-    .corner.bottom-right {
+    .bottom-right {
       bottom: 24px;
       right: 24px;
       border-width: 0 1px 1px 0;
@@ -127,7 +130,7 @@
       animation: appear .8s ease both;
     }
 
-    /* CONTENT */
+    /* CONTENIDO */
 
     .content {
       width: 100%;
@@ -148,11 +151,20 @@
       text-transform: uppercase;
     }
 
+    /* ACERTIJOS */
+
     .puzzles {
       width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 25px;
+    }
+
+    .puzzle-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 9px;
     }
 
     .puzzle {
@@ -174,6 +186,7 @@
       font-size: 27px;
       font-weight: bold;
       text-transform: uppercase;
+      transition: border-color .25s, color .25s;
     }
 
     .letter input {
@@ -191,31 +204,50 @@
       caret-color: var(--red);
     }
 
-    .letter input:focus {
-      border: none;
-    }
-
     .letter input::placeholder {
       color: #d5d5d5;
     }
 
-    .letter.fixed {
-      color: var(--black);
+    .letter input:focus {
+      background: #fff5f5;
+    }
+
+    /* ESTADOS DE LAS PALABRAS */
+
+    .word-status {
+      min-height: 14px;
+      font-size: 10px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #888888;
+    }
+
+    .word-status.correct {
+      color: var(--green);
+    }
+
+    .word-status.incorrect {
+      color: var(--red);
     }
 
     .puzzle.correct .letter {
-      border-color: var(--red);
-      color: var(--red);
+      border-color: var(--green);
+      color: var(--green);
     }
 
     .puzzle.correct .letter input {
-      color: var(--red);
+      color: var(--green);
+    }
+
+    .puzzle.incorrect .letter {
+      border-color: var(--red);
     }
 
     /* COMING SOON */
 
     .coming-soon {
-      margin-top: 55px;
+      margin-top: 48px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -226,7 +258,6 @@
       font-size: 15px;
       letter-spacing: 4px;
       font-weight: bold;
-      color: var(--black);
     }
 
     .coming-soon p {
@@ -237,7 +268,7 @@
       text-transform: uppercase;
     }
 
-    /* LOADING BAR */
+    /* BARRA DE CARGA */
 
     .loader {
       width: 155px;
@@ -260,15 +291,11 @@
     }
 
     @keyframes loading {
-      0% {
-        width: 12%;
-      }
-      100% {
-        width: 82%;
-      }
+      0% { width: 12%; }
+      100% { width: 82%; }
     }
 
-    /* SOCIAL ICONS */
+    /* REDES SOCIALES */
 
     .social-icons {
       display: flex;
@@ -298,7 +325,7 @@
       stroke-linejoin: round;
     }
 
-    .social-icons svg .filled {
+    .social-icons .filled {
       fill: currentColor;
       stroke: none;
     }
@@ -308,13 +335,164 @@
       transform: translateY(-3px);
     }
 
-    /* ANIMATIONS */
+    /* VENTANA DEL PREMIO */
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(0, 0, 0, .76);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+
+      transition:
+        opacity .35s ease,
+        visibility .35s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .modal {
+      width: 100%;
+      max-width: 420px;
+      background: var(--white);
+      padding: 42px 30px 35px;
+      text-align: center;
+      position: relative;
+      border: 1px solid #dddddd;
+
+      transform: translateY(20px) scale(.97);
+      transition: transform .35s ease;
+    }
+
+    .modal-overlay.active .modal {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 13px;
+      right: 17px;
+      border: none;
+      background: none;
+      font-size: 25px;
+      cursor: pointer;
+      color: #777777;
+    }
+
+    .modal-label {
+      font-family: "Futura", Arial, sans-serif;
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--red);
+      margin-bottom: 17px;
+    }
+
+    .modal h2 {
+      font-family: "Futura", Arial, sans-serif;
+      font-size: 23px;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+
+    .discount {
+      font-family: "Futura", Arial, sans-serif;
+      font-size: 76px;
+      line-height: 1;
+      color: var(--red);
+      margin: 18px 0;
+    }
+
+    .discount span {
+      font-size: 35px;
+    }
+
+    .modal-description {
+      font-size: 12px;
+      line-height: 1.7;
+      color: #666666;
+      max-width: 290px;
+      margin: 0 auto 22px;
+    }
+
+    .coupon {
+      border: 1px dashed var(--red);
+      padding: 13px;
+      margin: 0 auto 22px;
+      max-width: 230px;
+    }
+
+    .coupon small {
+      display: block;
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: #777777;
+      margin-bottom: 6px;
+    }
+
+    .coupon strong {
+      font-family: "Futura", Arial, sans-serif;
+      font-size: 22px;
+      letter-spacing: 2px;
+    }
+
+    .instagram-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 15px 12px;
+      background: var(--red);
+      color: white;
+      text-decoration: none;
+      font-family: "Futura", Arial, sans-serif;
+      font-size: 12px;
+      letter-spacing: 1px;
+      border: 1px solid var(--red);
+      transition: background .2s, color .2s;
+    }
+
+    .instagram-button:hover {
+      background: white;
+      color: var(--red);
+    }
+
+    .instagram-button svg {
+      width: 17px;
+      height: 17px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .modal-note {
+      font-size: 10px;
+      color: #888888;
+      line-height: 1.6;
+      margin-top: 15px;
+    }
+
+    /* ANIMACIONES */
 
     @keyframes appear {
       from {
         opacity: 0;
         transform: translateY(12px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
@@ -343,11 +521,11 @@
       }
 
       .coming-soon {
-        margin-top: 45px;
+        margin-top: 42px;
       }
     }
 
-    /* MOBILE */
+    /* MÓVIL */
 
     @media (max-width: 600px) {
       .logo-container {
@@ -388,7 +566,7 @@
       }
 
       .coming-soon {
-        margin-top: 42px;
+        margin-top: 38px;
       }
 
       .coming-soon h2 {
@@ -410,24 +588,32 @@
         height: 24px;
       }
 
-      .corner.top-left,
-      .corner.top-right {
+      .top-left,
+      .top-right {
         top: 15px;
       }
 
-      .corner.top-left,
-      .corner.bottom-left {
+      .top-left,
+      .bottom-left {
         left: 15px;
       }
 
-      .corner.top-right,
-      .corner.bottom-right {
+      .top-right,
+      .bottom-right {
         right: 15px;
       }
 
-      .corner.bottom-left,
-      .corner.bottom-right {
+      .bottom-left,
+      .bottom-right {
         bottom: 15px;
+      }
+
+      .modal {
+        padding: 38px 23px 28px;
+      }
+
+      .discount {
+        font-size: 68px;
       }
     }
 
@@ -451,13 +637,13 @@
 
 <body>
 
-  <!-- DECORATIVE CORNERS -->
+  <!-- ESQUINAS -->
   <div class="corner top-left"></div>
   <div class="corner top-right"></div>
   <div class="corner bottom-left"></div>
   <div class="corner bottom-right"></div>
 
-  <!-- CENTERED LOGO -->
+  <!-- LOGO -->
   <header class="logo-container">
     <img
       class="logo"
@@ -466,57 +652,116 @@
     >
   </header>
 
+  <!-- CONTENIDO PRINCIPAL -->
   <main class="page">
-
     <section class="content">
 
-     
+      <p class="eyebrow">Something is coming</p>
 
-      <!-- WORD PUZZLES -->
+      <!-- ACERTIJOS -->
       <div class="puzzles">
 
         <!-- CAMISAS -->
-        <div class="puzzle" data-answer="CAMISAS">
-          <span class="letter"><input maxlength="1" aria-label="Letra 1 de CAMISAS"></span>
-          <span class="letter"><input maxlength="1" aria-label="Letra 2 de CAMISAS"></span>
-          <span class="letter"><input maxlength="1" aria-label="Letra 3 de CAMISAS"></span>
-          <span class="letter fixed">I</span>
-          <span class="letter"><input maxlength="1" aria-label="Letra 5 de CAMISAS"></span>
-          <span class="letter fixed">A</span>
-          <span class="letter"><input maxlength="1" aria-label="Letra 7 de CAMISAS"></span>
+        <div class="puzzle-container">
+          <div class="puzzle" data-answer="CAMISAS">
+
+            <span class="letter">
+              <input maxlength="1" autocomplete="off" aria-label="Letra 1 de CAMISAS">
+            </span>
+
+            <span class="letter">
+              <input maxlength="1" autocomplete="off" aria-label="Letra 2 de CAMISAS">
+            </span>
+
+            <span class="letter">
+              <input maxlength="1" autocomplete="off" aria-label="Letra 3 de CAMISAS">
+            </span>
+
+            <span class="letter fixed">I</span>
+
+            <span class="letter">
+              <input maxlength="1" autocomplete="off" aria-label="Letra 5 de CAMISAS">
+            </span>
+
+            <span class="letter fixed">A</span>
+
+            <span class="letter">
+              <input maxlength="1" autocomplete="off" aria-label="Letra 7 de CAMISAS">
+            </span>
+
+          </div>
+          <p class="word-status" aria-live="polite"></p>
         </div>
 
         <!-- GORRAS -->
-        <div class="puzzle" data-answer="GORRAS">
-          <span class="letter"><input maxlength="1" aria-label="Letra 1 de GORRAS"></span>
-          <span class="letter fixed">O</span>
-          <span class="letter"><input maxlength="1" aria-label="Letra 3 de GORRAS"></span>
-          <span class="letter"><input maxlength="1" aria-label="Letra 4 de GORRAS"></span>
-          <span class="letter fixed">A</span>
-          <span class="letter"><input maxlength="1" aria-label="Letra 6 de GORRAS"></span>
+        <div class="puzzle-container">
+          <div class="puzzle" data-answer="GORRAS">
+
+            <span class="letter">
+              <input maxlength="1" autocomplete="off" aria-label="Letra 1 de GORRAS">
+            </span>
+
+            <span class="letter fixed">O</span>
+
+            <span class="letter">
+              <input maxlength="1" autocomplete="off" aria-label="Letra 3 de GORRAS">
+            </span>
+
+            <span class="letter">
+              <input maxlength="1" autocomplete="off" aria-label="Letra 4 de GORRAS">
+            </span>
+
+            <span class="letter fixed">A</span>
+
+            <span class="letter">
+              <input maxlength="1" autocomplete="off" aria-label="Letra 6 de GORRAS">
+            </span>
+
+          </div>
+          <p class="word-status" aria-live="polite"></p>
         </div>
 
         <!-- HOODIES -->
-        <div class="puzzle" data-answer="HOODIES">
-          <span class="letter"><input maxlength="1" aria-label="Letra 1 de HOODIES"></span>
-          <span class="letter fixed">O</span>
-          <span class="letter"><input maxlength="1" aria-label="Letra 3 de HOODIES"></span>
-          <span class="letter fixed">D</span>
-          <span class="letter"><input maxlength="1" aria-label="Letra 5 de HOODIES"></span>
-          <span class="letter fixed">E</span>
-          <span class="letter"><input maxlength="1" aria-label="Letra 7 de HOODIES"></span>
+        <div class="puzzle-container">
+          <div class="puzzle" data-answer="HOODIES">
+
+            <span class="letter">
+              <input maxlength="1" autocomplete="off" aria-label="Letra 1 de HOODIES">
+            </span>
+
+            <span class="letter fixed">O</span>
+
+            <span class="letter">
+              <input maxlength="1" autocomplete="off" aria-label="Letra 3 de HOODIES">
+            </span>
+
+            <span class="letter fixed">D</span>
+
+            <span class="letter">
+              <input maxlength="1" autocomplete="off" aria-label="Letra 5 de HOODIES">
+            </span>
+
+            <span class="letter fixed">E</span>
+
+            <span class="letter">
+              <input maxlength="1" autocomplete="off" aria-label="Letra 7 de HOODIES">
+            </span>
+
+          </div>
+          <p class="word-status" aria-live="polite"></p>
         </div>
 
       </div>
 
       <!-- COMING SOON -->
       <div class="coming-soon">
+
         <h2>COMING SOON</h2>
         <p>wear your way</p>
 
         <div class="loader"></div>
 
-        <!-- SOCIAL MEDIA -->
+        <!-- REDES SOCIALES -->
         <div class="social-icons">
 
           <!-- INSTAGRAM -->
@@ -548,7 +793,7 @@
 
           <!-- FACEBOOK -->
           <a
-            href="https://www.facebook.com/streedhn"
+            href="https://www.facebook.com/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Facebook"
@@ -562,73 +807,259 @@
       </div>
 
     </section>
-
   </main>
 
+  <!-- VENTANA EMERGENTE DEL PREMIO -->
+  <div
+    class="modal-overlay"
+    id="discountModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modalTitle"
+    aria-hidden="true"
+  >
+
+    <div class="modal">
+
+      <button
+        class="modal-close"
+        id="closeModal"
+        aria-label="Cerrar ventana"
+      >
+        &times;
+      </button>
+
+      <p class="modal-label">STREED REWARD</p>
+
+      <h2 id="modalTitle">¡LO DESCUBRISTE!</h2>
+
+      <p class="modal-description">
+        Resolviste los tres acertijos. Ahora tienes una recompensa
+        especial por ser parte de STREED.
+      </p>
+
+      <div class="discount">10<span>%</span></div>
+
+      <p class="modal-description">
+        HAS GANADO UN DESCUENTO EN TU PRÓXIMA COMPRA.
+      </p>
+
+      <div class="coupon">
+        <small>TU CÓDIGO DE DESCUENTO</small>
+        <strong>STREED10</strong>
+      </div>
+
+      <a
+        class="instagram-button"
+        href="https://ig.me/m/streedhn"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <svg viewBox="0 0 24 24">
+          <rect x="3" y="3" width="18" height="18" rx="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="1"/>
+        </svg>
+
+        ENVIAR MI PREMIO POR INSTAGRAM
+      </a>
+
+      <p class="modal-note">
+        Toma una captura de esta recompensa y envíala por DM a
+        <strong>@streedhn</strong> para reclamar tu descuento.
+      </p>
+
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT -->
   <script>
-    const puzzles = document.querySelectorAll(".puzzle");
+    document.addEventListener("DOMContentLoaded", () => {
 
-    puzzles.forEach((puzzle) => {
-      const answer = puzzle.dataset.answer;
-      const inputs = Array.from(puzzle.querySelectorAll("input"));
+      const puzzles = document.querySelectorAll(".puzzle");
+      const modal = document.getElementById("discountModal");
+      const closeModal = document.getElementById("closeModal");
 
-      function checkAnswer() {
-        const letters = Array.from(puzzle.querySelectorAll(".letter"));
+      let rewardShown = false;
 
-        const currentWord = letters.map((letter) => {
-          const input = letter.querySelector("input");
-          return input ? input.value.toUpperCase() : letter.textContent.trim();
-        }).join("");
+      // VALIDAR TODAS LAS PALABRAS
+      function checkAllPuzzles() {
 
-        if (currentWord === answer) {
-          puzzle.classList.add("correct");
-        } else {
-          puzzle.classList.remove("correct");
+        const allCorrect = Array.from(puzzles).every(puzzle => {
+          return puzzle.dataset.answer === getCurrentWord(puzzle);
+        });
+
+        if (allCorrect && !rewardShown) {
+          rewardShown = true;
+
+          setTimeout(() => {
+            modal.classList.add("active");
+            modal.setAttribute("aria-hidden", "false");
+            document.body.classList.add("modal-open");
+          }, 500);
         }
       }
 
-      inputs.forEach((input, index) => {
-        input.addEventListener("input", () => {
-          input.value = input.value
-            .replace(/[^a-zA-Z]/g, "")
-            .slice(0, 1)
-            .toUpperCase();
+      // OBTENER PALABRA COMPLETA
+      function getCurrentWord(puzzle) {
 
-          if (input.value && inputs[index + 1]) {
-            inputs[index + 1].focus();
-          }
+        const letters = Array.from(puzzle.querySelectorAll(".letter"));
 
-          checkAnswer();
-        });
+        return letters.map(letter => {
 
-        input.addEventListener("keydown", (event) => {
-          if (event.key === "Backspace" && !input.value && inputs[index - 1]) {
-            inputs[index - 1].focus();
-          }
-        });
+          const input = letter.querySelector("input");
 
-        input.addEventListener("paste", (event) => {
-          event.preventDefault();
+          return input
+            ? input.value.toUpperCase()
+            : letter.textContent.trim().toUpperCase();
 
-          const pasted = event.clipboardData
-            .getData("text")
-            .replace(/[^a-zA-Z]/g, "")
-            .toUpperCase();
+        }).join("");
+      }
 
-          if (pasted.length) {
+      // VALIDAR UNA PALABRA
+      function validatePuzzle(puzzle) {
+
+        const answer = puzzle.dataset.answer;
+        const inputs = Array.from(puzzle.querySelectorAll("input"));
+        const status = puzzle.parentElement.querySelector(".word-status");
+
+        const currentWord = getCurrentWord(puzzle);
+
+        // Si todavía faltan letras
+        if (inputs.some(input => input.value.trim() === "")) {
+
+          puzzle.classList.remove("correct", "incorrect");
+
+          status.textContent = "";
+          status.className = "word-status";
+
+          checkAllPuzzles();
+          return;
+        }
+
+        // Si la palabra es correcta
+        if (currentWord === answer) {
+
+          puzzle.classList.add("correct");
+          puzzle.classList.remove("incorrect");
+
+          status.textContent = "✓ ¡CORRECTO!";
+          status.className = "word-status correct";
+
+        }
+
+        // Si la palabra es incorrecta
+        else {
+
+          puzzle.classList.add("incorrect");
+          puzzle.classList.remove("correct");
+
+          status.textContent = "✕ INTÉNTALO DE NUEVO";
+          status.className = "word-status incorrect";
+
+        }
+
+        checkAllPuzzles();
+      }
+
+      // ACTIVAR LOS INPUTS
+      puzzles.forEach(puzzle => {
+
+        const inputs = Array.from(puzzle.querySelectorAll("input"));
+
+        inputs.forEach((input, index) => {
+
+          input.addEventListener("input", () => {
+
+            input.value = input.value
+              .replace(/[^a-zA-Z]/g, "")
+              .slice(0, 1)
+              .toUpperCase();
+
+            validatePuzzle(puzzle);
+
+            if (input.value && inputs[index + 1]) {
+              inputs[index + 1].focus();
+            }
+
+          });
+
+          // REGRESAR A LA LETRA ANTERIOR
+          input.addEventListener("keydown", event => {
+
+            if (
+              event.key === "Backspace" &&
+              !input.value &&
+              inputs[index - 1]
+            ) {
+              inputs[index - 1].focus();
+            }
+
+          });
+
+          // PERMITIR PEGAR PALABRAS COMPLETAS
+          input.addEventListener("paste", event => {
+
+            event.preventDefault();
+
+            const pasted = event.clipboardData
+              .getData("text")
+              .replace(/[^a-zA-Z]/g, "")
+              .toUpperCase();
+
+            if (!pasted) return;
+
             inputs.forEach((field, i) => {
               field.value = pasted[i] || "";
             });
 
-            checkAnswer();
+            validatePuzzle(puzzle);
 
             const nextEmpty = inputs.find(field => !field.value);
-            if (nextEmpty) nextEmpty.focus();
-          }
+
+            if (nextEmpty) {
+              nextEmpty.focus();
+            }
+
+          });
+
         });
+
       });
+
+      // CERRAR VENTANA
+      function hideModal() {
+
+        modal.classList.remove("active");
+        modal.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("modal-open");
+
+      }
+
+      closeModal.addEventListener("click", hideModal);
+
+      modal.addEventListener("click", event => {
+
+        if (event.target === modal) {
+          hideModal();
+        }
+
+      });
+
+      document.addEventListener("keydown", event => {
+
+        if (
+          event.key === "Escape" &&
+          modal.classList.contains("active")
+        ) {
+          hideModal();
+        }
+
+      });
+
     });
   </script>
 
 </body>
 </html>
+
